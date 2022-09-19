@@ -3,7 +3,7 @@
 This folder contains the front end logic and files 
 for the OMS of our system. The back end
 code will be located at the following link:
-[OMS Back End](https://github.com/jagfnisum/oms_frontend)
+[OMS Front End](https://github.com/jagfnisum/oms_frontend)
 
 
 
