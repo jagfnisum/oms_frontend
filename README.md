@@ -18,7 +18,7 @@ Jose Garcia Figueroa|FULL STACK
 Michael Bose|FULL STACK
 Rozanna Abramtsis|FULL STACK
 Steve Cheung|FULL STACK
-Jiayue Zhang|DEVOPS
-Thanh Quan Nguyen|DEVOPS
-Zeeshan Mohamedy|DEVOPS
-Garett Yamano|QE
+Jiayue Zhang|QE
+Thanh Quan Nguyen|QE
+Zeeshan Mohamedy|QE
+Garett Yamano|DEVOPS
