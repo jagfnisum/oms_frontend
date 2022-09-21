@@ -5,12 +5,14 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GoogleApiComponent } from './google-api/google-api.component';
+import { GoogleApiComponent } from './login/login.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GoogleApiComponent
+    GoogleApiComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

@@ -3,8 +3,8 @@ import { GoogleApiService, UserInformation } from '../google-api.service';
 
 @Component({
   selector: 'app-google-api',
-  templateUrl: './google-api.component.html',
-  styleUrls: ['./google-api.component.css']
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class GoogleApiComponent implements OnInit {
 
