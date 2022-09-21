@@ -1,18 +1,19 @@
 
-<div *ngIf="!isLoggedIn()">
+<div *ngIf="!user">
   <h3 class="text-center mb-5 mt-2">Admin Signin</h3>
   <div class="text-center">
-      <button type="button" (click)="login()" class="btn btn-lg google-login-btn">Sign in with Google</button>
+      <button type="button" (click)="signInWithGL()" class="btn btn-lg google-login-btn">Sign in with Google</button>
   </div>
 </div>
 
+<!-- *ngIf="user.provider === GoogleLoginProvider.PROVIDER_ID" -->
+  <div *ngIf="user">
+      <h4 class="text-center">{{ user.name }}</h4>
+      <p class="text-center">{{ user.email }}</p>
+      <p class="text-center">Logged in with {{ user.provider }}</p>
 
-  <div *ngIf="isLoggedIn()">
-    <div class="container">Hi and welcome!</div>
-    <div class="container">Name: {{ userInfo?.info?.name }}</div>
-    <div class="container"><img src="{{ userInfo?.info?.picture }}"></div>
-  
-    <div class="container">
-      <button (click)="logout()">Logout from Google</button>
+    <div class="text-center">
+      <button (click)="signOut()">Logout from Google</button>
     </div>
+
   </div>
