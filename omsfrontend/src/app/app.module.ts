@@ -8,12 +8,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { MatTableModule } from '@angular/material/table';
+import { OrderTableComponent } from './order-table/order-table.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    OrderTableComponent
   ],
   imports: [
     BrowserModule,
