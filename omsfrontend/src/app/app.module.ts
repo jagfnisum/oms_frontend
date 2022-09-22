@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -21,6 +22,11 @@ import {  GoogleLoginProvider } from 'angularx-social-login';
     AppRoutingModule,
     HttpClientModule,
     SocialLoginModule,
+    RouterModule.forRoot([
+      { path: 'login', component: LoginPageComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '*', redirectTo: 'login', pathMatch: 'full' }
+	]),
   ],
   providers: [    {
     provide: 'SocialAuthServiceConfig',
