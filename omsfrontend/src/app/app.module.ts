@@ -4,24 +4,33 @@ import { BrowserModule } from '@angular/platform-browser';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {  GoogleLoginProvider } from 'angularx-social-login';
+import { DummyComponent } from './dummy/dummy.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    NavbarComponent
+    NavbarComponent,
+    DummyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     SocialLoginModule,
+    RouterModule.forRoot([
+      { path: 'dummy', component: DummyComponent },
+      { path: 'login', component: LoginPageComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '*', redirectTo: 'login', pathMatch: 'full' }
+	  ]),
     OAuthModule.forRoot() 
   ],
   providers: [    {
