@@ -1,0 +1,41 @@
+
+<!-- {{ orders | json }} -->
+
+<div>
+
+    <div>
+        <input [(ngModel)]="searchText" placeholder="search order" class="form-control">
+    </div>
+    <br>
+    <table class="table table-bordered table-striped">
+
+        <thead>
+            <tr>
+                <th>OrderId</th>
+                <th>UserID</th>
+                <th>AddressID</th>
+                <th>CreditCardID</th>
+                <th>DateOrdered</th>
+                <th>DateShipped</th>
+                <th>DateDelivered</th>
+                <th>Price</th>
+                <th>OrderStatus</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let order of orders | searchOrders:searchText">
+                <td>{{order.orderID}}</td>
+                <td>{{order.userId}}</td>
+                <td>{{order.addressID}}</td>
+                <td>{{order.creditCardID}}</td>
+                <td>{{order.dateOrdered}}</td>
+                <td>{{order.dateShipped}}</td>
+                <td>{{order.dateDelivered}}</td>
+                <td>{{order.price}}</td>
+                <td>{{order.orderStatus}}</td>
+            </tr>    
+        </tbody>
+
+    </table>
+</div>
