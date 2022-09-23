@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { OrdersService } from '../orders.service';
 
 
 export interface PeriodicElement {
@@ -30,12 +34,29 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class OrderTableComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit(): void {
+  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  // dataSource = ELEMENT_DATA;
+
+  displayedColumns = ['name','username','email'];
+  dataSource!:MatTableDataSource<any>;
+
+  @ViewChild('paginator') paginator! : MatPaginator; 
+  @ViewChild(MatSort) matSort! : MatSort;
+
+  constructor(private service: OrdersService) {}
+
+  ngOnInit() {
+    this.service.getAllOrders().subscribe((response:any) =>{
+      this.dataSource = new MatTableDataSource(response);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.matSort;
+    })
   }
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  filterData($event : any){
+    this.dataSource.filter = $event.target.value;
+  }
+
 
 }

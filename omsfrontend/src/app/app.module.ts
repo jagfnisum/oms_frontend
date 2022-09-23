@@ -9,7 +9,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
 import { MatTableModule } from '@angular/material/table';
 import { OrderTableComponent } from './order-table/order-table.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,12 @@ import { OrderTableComponent } from './order-table/order-table.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTableModule,
-    TableVirtualScrollModule
+    TableVirtualScrollModule,
+    HttpClientModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [ ],
   bootstrap: [AppComponent]
