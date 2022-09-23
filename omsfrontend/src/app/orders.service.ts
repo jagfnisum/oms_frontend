@@ -6,12 +6,16 @@ import { Injectable } from '@angular/core';
 })
 export class OrdersService {
 
-  //baseUrl = 'http://localhost:8080/api/order/getOrders'; 
+  baseUrl2 = 'http://localhost:8080/api/order/getOrders'; 
   baseUrl = 'https://jsonplaceholder.typicode.com/users';
   constructor(private http: HttpClient) { }
 
   getAllOrders() {
     return this.http.get<any>(`${this.baseUrl}`);
   }
-  
+
+  getAllOrders2(){
+    return this.http.get<any>(`${this.baseUrl2}`);
+  }
+
 }

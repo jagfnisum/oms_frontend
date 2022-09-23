@@ -34,23 +34,40 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class OrderTableComponent implements OnInit {
 
-
+  @ViewChild('paginator') paginator! : MatPaginator; 
+  @ViewChild(MatSort) matSort! : MatSort;
   // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   // dataSource = ELEMENT_DATA;
+  orders = [];
 
   displayedColumns = ['name','username','email'];
   dataSource!:MatTableDataSource<any>;
 
-  @ViewChild('paginator') paginator! : MatPaginator; 
-  @ViewChild(MatSort) matSort! : MatSort;
+  /* 
+    Displayed column names will be different from property value of the actual
+     order object
+  */
+  displayOrderTable = {
+    name: 'name',
+    username: 'username',
+    email: 'email',
+  };
+
+  //used in material table to find the index/row of a table item
+  selectedRowIndex: any = null;
 
   constructor(private service: OrdersService) {}
 
   ngOnInit() {
     this.service.getAllOrders().subscribe((response:any) =>{
+      this.orders = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
+    })
+
+    this.service.getAllOrders().subscribe((response:any) =>{
+      console.log(response)
     })
   }
 
@@ -58,5 +75,12 @@ export class OrderTableComponent implements OnInit {
     this.dataSource.filter = $event.target.value;
   }
 
+  /*
+    Will return the dom reference of the current row selected
+    will get called on button click by default
+  */
+    selectedRow(row: any) {
+      console.log('selectedRow', row);
+    }
 
 }
