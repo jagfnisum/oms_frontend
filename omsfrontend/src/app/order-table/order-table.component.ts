@@ -41,15 +41,15 @@ export class OrderTableComponent implements OnInit {
   orders = [];
 
   displayedColumns = [
-    'OrderId',
-    'UserID',
-    'AddressID',
-    'CreditCardID',
-    'DateOrdered',
-    'DateShipped',
-    'DateDelivered',
-    'Price',
-    'OrderStatus'
+    'order_id',
+    'user_id',
+    'address_id',
+    'credit_card_id',
+    'date_ordered',
+    'date_shipped',
+    'date_delivered',
+    'price',
+    'order_status'
   ];
 
   dataSource!:MatTableDataSource<any>;
@@ -59,15 +59,15 @@ export class OrderTableComponent implements OnInit {
      order object
   */
   displayOrderTable = {
-    OrderId: 'OrderId',
-    UserID: 'UserID',
-    AddressID: 'AddressID',
-    CreditCardID:'CreditCardID',
-    DateOrdered:'DateOrdered',
-    DateShipped:'DateShipped',
-    DateDelivered:'DateDelivered',
-    Price:'Price',
-    OrderStatus:'OrderStatus'
+    order_id: 'order_id',
+    user_id: 'user_id',
+    address_id: 'address_id',
+    credit_card_id:'credit_card_id',
+    date_ordered:'date_ordered',
+    date_shipped:'date_shipped',
+    date_delivered:'date_delivered',
+    price:'price',
+    order_status:'order_status'
   };
 
   // <th>OrderId</th>
@@ -86,15 +86,21 @@ export class OrderTableComponent implements OnInit {
   constructor(private service: OrdersService) {}
 
   ngOnInit() {
-    this.service.getAllOrders().subscribe((response:any) =>{
+    // this.service.getAllOrders().subscribe((response:any) =>{
+    //   console.log(response);
+    //   console.log("second method");
+    //   this.orders = response;
+    //   this.dataSource = new MatTableDataSource(response);
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.matSort;
+    // })
+
+    this.service.getAllOrders2().subscribe((response:any) =>{
       this.orders = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
-    })
-
-    this.service.getAllOrders2().subscribe((response:any) =>{
-      console.log(response)
+      // console.log(response)
     })
   }
 

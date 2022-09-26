@@ -11,12 +11,13 @@
 
 
         <ng-container *ngFor="let item of displayOrderTable | keyvalue" [matColumnDef]="item.key">
-
+            
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 {{ item.value | titlecase }}
             </th>
-
+            
             <td mat-cell *matCellDef="let orders">{{ orders[item.key] }}</td>
+            
 
         </ng-container>
 
