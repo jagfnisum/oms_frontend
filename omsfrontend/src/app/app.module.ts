@@ -15,11 +15,16 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {  GoogleLoginProvider } from 'angularx-social-login';
+import { LoginPageComponent } from './login/login.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    OrderTableComponent
+    OrderTableComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +36,25 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    SocialLoginModule
   ],
-  providers: [ ],
+  providers: [ 
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '624796833023-clhjgupm0pu6vgga7k5i5bsfp6qp6egh.apps.googleusercontent.com'
+            ),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
