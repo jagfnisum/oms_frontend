@@ -40,7 +40,18 @@ export class OrderTableComponent implements OnInit {
   // dataSource = ELEMENT_DATA;
   orders = [];
 
-  displayedColumns = ['name','username','email'];
+  displayedColumns = [
+    'OrderId',
+    'UserID',
+    'AddressID',
+    'CreditCardID',
+    'DateOrdered',
+    'DateShipped',
+    'DateDelivered',
+    'Price',
+    'OrderStatus'
+  ];
+
   dataSource!:MatTableDataSource<any>;
 
   /* 
@@ -48,10 +59,26 @@ export class OrderTableComponent implements OnInit {
      order object
   */
   displayOrderTable = {
-    name: 'name',
-    username: 'username',
-    email: 'email',
+    OrderId: 'OrderId',
+    UserID: 'UserID',
+    AddressID: 'AddressID',
+    CreditCardID:'CreditCardID',
+    DateOrdered:'DateOrdered',
+    DateShipped:'DateShipped',
+    DateDelivered:'DateDelivered',
+    Price:'Price',
+    OrderStatus:'OrderStatus'
   };
+
+  // <th>OrderId</th>
+  // <th>UserID</th>
+  // <th>AddressID</th>
+  // <th>CreditCardID</th>
+  // <th>DateOrdered</th>
+  // <th>DateShipped</th>
+  // <th>DateDelivered</th>
+  // <th>Price</th>
+  // <th>OrderStatus</th>
 
   //used in material table to find the index/row of a table item
   selectedRowIndex: any = null;
@@ -66,7 +93,7 @@ export class OrderTableComponent implements OnInit {
       this.dataSource.sort = this.matSort;
     })
 
-    this.service.getAllOrders().subscribe((response:any) =>{
+    this.service.getAllOrders2().subscribe((response:any) =>{
       console.log(response)
     })
   }
