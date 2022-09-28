@@ -16,6 +16,9 @@ import { OrderDetailsComponent } from '../order-details/order-details.component'
 })
 export class OrderTableComponent implements OnInit {
 
+  isShow = true; 
+  selectedSearchCategory = "";
+
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) matSort!: MatSort;
   orders = [];
@@ -30,8 +33,13 @@ export class OrderTableComponent implements OnInit {
     'price',
     'orderStatus'
   ];
- 
+
+  theSource!: MatTableDataSource<any>;
+
   dataSource!: MatTableDataSource<any>;
+  dataSource_oid!: MatTableDataSource<any>;
+  dataSource_uid!: MatTableDataSource<any>;
+  dataSource_status!: MatTableDataSource<any>;
 
   /* 
     Displayed column names will be different from property value of the actual
@@ -46,14 +54,14 @@ export class OrderTableComponent implements OnInit {
     dateShipped: 'dateShipped',
     price: 'price',
     orderStatus: 'orderStatus'
-  };
 
-  
+  };
 
   //used in material table to find the index/row of a table item
   selectedRowIndex: any = null;
 
-  constructor(private service: OrdersService,
+  constructor(
+    private service: OrdersService,
     private readonly _authService: SocialAuthService,
     private router: Router,
     private dialogRef: MatDialog) { }
@@ -62,14 +70,55 @@ export class OrderTableComponent implements OnInit {
     this.service.getAllOrders().subscribe((response: any) => {
       this.orders = response;
       this.dataSource = new MatTableDataSource(response);
+      this.theSource =new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
+
+      // search with orderID column
+      this.dataSource_oid = new MatTableDataSource(response);
+      this.dataSource_oid.filterPredicate = (data : any, filter : any) => {
+        return data.orderID == filter;
+      };
+      
+      // search with userId column
+      this.dataSource_uid = new MatTableDataSource(response);
+      this.dataSource_uid.filterPredicate = (data : any, filter : any) => {
+        return data.userId == filter;
+      };
+     
+      // search with orderStatus column
+      this.dataSource_status = new MatTableDataSource(response);
+      this.dataSource_status.filterPredicate = (data : any, filter : any) => {
+        return data.orderStatus.toLowerCase().includes(filter.toLowerCase());
+      };
+
     })
 
   }
 
   filterData($event: any) {
+    if(this.selectedSearchCategory == "all") {
+        this.dataSource = this.theSource; 
+    } 
+    if (this.selectedSearchCategory == "oid") {
+        this.dataSource = this.dataSource_oid;    
+    }
+    if (this.selectedSearchCategory == "uid") {
+        this.dataSource = this.dataSource_uid;
+    }
+    if (this.selectedSearchCategory == "status"){
+        this.dataSource = this.dataSource_status;
+    }
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.matSort;
+
     this.dataSource.filter = $event.target.value;
+  }
+
+  handleDropdown(event: any) {
+    this.selectedSearchCategory = event.target.value;
+    console.log(event.target.value);
   }
 
   openDialog(response: any, id :string){
@@ -87,6 +136,7 @@ export class OrderTableComponent implements OnInit {
   selectedRow(row: any) {
     this.openDialog(row.orderItems,row.orderID);
   }
+
 
   signOut(): void {
     this._authService.signOut();
