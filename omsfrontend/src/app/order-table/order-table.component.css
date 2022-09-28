@@ -1,0 +1,35 @@
+table {
+  width: 100%;
+}
+.container{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+mat-header-cell, mat-cell {
+  justify-content: center;
+}
+
+.mat-row:nth-child(odd){
+  background-color: rgb(242, 242, 242);
+  transition: .5s;
+}
+
+.mat-row:nth-child(odd):hover{
+  background-color: #c0bfc0;
+  transition: .5s;
+  cursor: pointer;
+}
+
+.mat-row:nth-child(even){
+  background-color: #fff;
+  transition: .5s;
+}
+
+.mat-row:nth-child(even):hover{
+  background-color: #c0bfc0;
+  transition: .5s;
+  cursor: pointer;
+
+}

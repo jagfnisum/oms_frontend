@@ -1,0 +1,48 @@
+<div class="container">
+
+    <div class="search-container mt-5 mb-5">
+        <form class="d-flex">
+            <input class="search form-control me-2" 
+                    type="search" placeholder="Search" aria-label="Search" 
+                    name="Search"
+                    (keyup)="filterData($event)"
+                    >
+    
+            <select (change)="handleDropdown($event)" name="categoryDD" >
+              <option value="all" >All</option>
+              <option value="oid">Order ID</option>
+              <option value="uid">User ID</option>
+              <option value="status">Order Status</option>
+            </select>
+        </form>
+    </div>
+    
+    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container *ngFor="let item of displayOrderTable | keyvalue" [matColumnDef]="item.key">
+            
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ item.value | titlecase }}
+            </th>
+            
+            <td mat-cell *matCellDef="let orders">{{ orders[item.key] }}</td>
+        
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns let i= index" (click)="selectedRow(row)"
+            [ngClass]="{'highlightTableColor': selectedRowIndex == i}" ></tr>
+
+    </table>
+
+    
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[1,2,5, 10, 25, 100]">
+    </mat-paginator>
+    
+    <div class="text-center">
+        <button  (click)="signOut()">Logout from Google</button>
+    </div>
+</div>
+
+
+
