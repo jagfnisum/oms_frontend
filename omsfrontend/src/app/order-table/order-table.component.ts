@@ -70,7 +70,7 @@ export class OrderTableComponent implements OnInit {
 
     this.service.getAllOrders().subscribe((response: any) => {
       this.orders = response;
-      console.log(response)
+      //console.log(response)
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -96,7 +96,7 @@ export class OrderTableComponent implements OnInit {
   */
   selectedRow(row: any) {
   
-    console.log(row.orderItems)
+    //console.log(row.orderItems)
 
     this.openDialog(row.orderItems,row.orderID);
 
@@ -105,7 +105,9 @@ export class OrderTableComponent implements OnInit {
   signOut(): void {
     this._authService.signOut();
     localStorage.removeItem('APP_TOKEN');
-    this.router.navigate(['/login']);
+    this._authService.authState.subscribe((user) => {
+        this.router.navigate(['/login']);
+    });
     console.log("Signed OUT")
   }
 

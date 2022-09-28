@@ -19,9 +19,8 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
     this._authService.authState.subscribe((user) => {
       this.user = user;
-        localStorage.setItem('APP_TOKEN', JSON.stringify(this.user.authToken));
-        this.router.navigate(['/orders']);
- 
+      localStorage.setItem('APP_TOKEN', JSON.stringify(this.user.authToken));
+      this.router.navigate(['/orders']);
     });
   }
  
