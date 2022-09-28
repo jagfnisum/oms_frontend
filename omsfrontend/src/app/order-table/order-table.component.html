@@ -1,14 +1,30 @@
 <div class="container">
 
-    <div class="search-container">
-        <mat-form-field appearance="fill">
+    <div class="search-container mt-5 mb-5">
+        <!-- <mat-form-field appearance="fill">
             <input matInput placeholder="search" autocomplete="off" (keyup)="filterData($event)">
         </mat-form-field>
         &nbsp;
-        <button mat-raised-button (click)="showOrHide()">More Search</button>        
+        <button mat-raised-button >More Search</button>         -->
+        <form class="d-flex">
+            <input class="search form-control me-2" 
+                    type="search" placeholder="Search" aria-label="Search" 
+                    name="Search"
+                    (keyup)="filterData($event)"
+                    >
+    
+            <select (change)="handleDropdown($event)" name="categoryDD" >
+              <option value="all" >All</option>
+              <option value="oid">Order ID</option>
+              <option value="uid">User ID</option>
+              <option value="status">Order Status</option>
+            </select>
+        </form>
     </div>
    
-    <div *ngIf = "!isShow">
+    
+
+    <!-- <div *ngIf = "!isShow">
         <form class="d-flex">
             <input (keyup)="filterOrderID($event)" class="search form-control me-2" type="search" placeholder="Search with Order_id" aria-label="Search" name="Search">
         </form>
@@ -21,7 +37,7 @@
             <input (keyup)="filterStatus($event)" class="search form-control me-2" type="search" placeholder="Search with Order_status" aria-label="Search" name="Search">
         </form>
         <br>
-    </div>
+    </div> -->
     
     <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
 

@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class OrderTableComponent implements OnInit {
 
   isShow = true; 
+  selectedSearchCategory = "";
 
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) matSort!: MatSort;
@@ -31,6 +32,7 @@ export class OrderTableComponent implements OnInit {
     'orderStatus'
   ];
 
+  // tableDataSource!: MatTableDataSource<any>;
   dataSource!: MatTableDataSource<any>;
   dataSource_oid!: MatTableDataSource<any>;
   dataSource_uid!: MatTableDataSource<any>;
@@ -62,17 +64,10 @@ export class OrderTableComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    // this.service.getAllOrders().subscribe((response:any) =>{
-    //   console.log(response);
-    //   console.log("second method");
-    //   this.orders = response;
-    //   this.dataSource = new MatTableDataSource(response);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.matSort;
-    // })
 
     this.service.getAllOrders2().subscribe((response: any) => {
       this.orders = response;
+      // this.tableDataSource = new MatTableDataSource(response);
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -82,39 +77,43 @@ export class OrderTableComponent implements OnInit {
       this.dataSource_oid.filterPredicate = (data : any, filter : any) => {
         return data.orderID == filter;
       };
+      this.dataSource_oid.paginator = this.paginator;
+      this.dataSource_oid.sort = this.matSort;
 
       this.dataSource_uid = new MatTableDataSource(response);
       this.dataSource_uid.filterPredicate = (data : any, filter : any) => {
         return data.userId == filter;
       };
+      this.dataSource_uid.paginator = this.paginator;
+      this.dataSource_uid.sort = this.matSort;
 
       this.dataSource_status = new MatTableDataSource(response);
       this.dataSource_status.filterPredicate = (data : any, filter : any) => {
         return data.orderStatus == filter;
       };
+      this.dataSource_status.paginator = this.paginator;
+      this.dataSource_status.sort = this.matSort;
 
       // console.log(response);
     })
   }
 
   filterData($event: any) {
-    this.dataSource = this.dataSource
+    if(this.selectedSearchCategory == "all") {
+        this.dataSource = this.dataSource
+    } else if (this.selectedSearchCategory == "oid") {
+        this.dataSource = this.dataSource_oid;
+    } else if (this.selectedSearchCategory == "uid") {
+        this.dataSource = this.dataSource_uid;
+    } else if (this.selectedSearchCategory == "status"){
+        this.dataSource = this.dataSource_status;
+    }
     this.dataSource.filter = $event.target.value;
   }
 
-  filterOrderID($event: any) {
-    this.dataSource = this.dataSource_oid;
-    this.dataSource.filter = $event.target.value;
-  }  
-
-  filterUserID($event: any) {
-    this.dataSource = this.dataSource_uid;
-    this.dataSource.filter = $event.target.value;
-  }  
-
-  filterStatus($event: any) {
-    this.dataSource = this.dataSource_status;
-    this.dataSource.filter = $event.target.value;
+  handleDropdown(event: any) {
+    this.selectedSearchCategory = event.target.value;
+    console.log(event.target.value);
   }
 
   /*
@@ -125,10 +124,6 @@ export class OrderTableComponent implements OnInit {
     console.log('selectedRow', row);
   }
 
-  // show hide for the more search bars
-  showOrHide(){
-    this.isShow = !this.isShow;
-  }
 
   signOut(): void {
     this._authService.signOut();
