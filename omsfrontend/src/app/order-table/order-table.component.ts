@@ -14,36 +14,41 @@ import { Router } from '@angular/router';
 })
 export class OrderTableComponent implements OnInit {
 
+  isShow = true; 
+
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) matSort!: MatSort;
   orders = [];
 
   displayedColumns = [
-    'order_id',
-    'user_id',
-    'address_id',
-    'credit_card_id',
-    'date_ordered',
-    'date_shipped',
+    'orderID',
+    'userId',
+    'addressID',
+    'creditCardID',
+    'dateOrdered',
+    'dateShipped',
     'price',
-    'order_status'
+    'orderStatus'
   ];
 
   dataSource!: MatTableDataSource<any>;
+  dataSource_oid!: MatTableDataSource<any>;
+  dataSource_uid!: MatTableDataSource<any>;
+  dataSource_status!: MatTableDataSource<any>;
 
   /* 
     Displayed column names will be different from property value of the actual
      order object
   */
   displayOrderTable = {
-    order_id: 'order_id',
-    user_id: 'user_id',
-    address_id: 'address_id',
-    credit_card_id: 'credit_card_id',
-    date_ordered: 'date_ordered',
-    date_shipped: 'date_shipped',
+    orderID: 'order_id',
+    userId: 'user_id',
+    addressID: 'address_id',
+    creditCardID: 'credit_card_id',
+    dateOrdered: 'date_ordered',
+    dateShipped: 'date_shipped',
     price: 'price',
-    order_status: 'order_status'
+    orderStatus: 'order_status'
   };
 
   
@@ -51,7 +56,8 @@ export class OrderTableComponent implements OnInit {
   //used in material table to find the index/row of a table item
   selectedRowIndex: any = null;
 
-  constructor(private service: OrdersService,
+  constructor(
+    private service: OrdersService,
     private readonly _authService: SocialAuthService,
     private router: Router) { }
 
@@ -70,10 +76,44 @@ export class OrderTableComponent implements OnInit {
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
+
+
+      this.dataSource_oid = new MatTableDataSource(response);
+      this.dataSource_oid.filterPredicate = (data : any, filter : any) => {
+        return data.orderID == filter;
+      };
+
+      this.dataSource_uid = new MatTableDataSource(response);
+      this.dataSource_uid.filterPredicate = (data : any, filter : any) => {
+        return data.userId == filter;
+      };
+
+      this.dataSource_status = new MatTableDataSource(response);
+      this.dataSource_status.filterPredicate = (data : any, filter : any) => {
+        return data.orderStatus == filter;
+      };
+
+      // console.log(response);
     })
   }
 
   filterData($event: any) {
+    this.dataSource = this.dataSource
+    this.dataSource.filter = $event.target.value;
+  }
+
+  filterOrderID($event: any) {
+    this.dataSource = this.dataSource_oid;
+    this.dataSource.filter = $event.target.value;
+  }  
+
+  filterUserID($event: any) {
+    this.dataSource = this.dataSource_uid;
+    this.dataSource.filter = $event.target.value;
+  }  
+
+  filterStatus($event: any) {
+    this.dataSource = this.dataSource_status;
     this.dataSource.filter = $event.target.value;
   }
 
@@ -83,6 +123,11 @@ export class OrderTableComponent implements OnInit {
   */
   selectedRow(row: any) {
     console.log('selectedRow', row);
+  }
+
+  // show hide for the more search bars
+  showOrHide(){
+    this.isShow = !this.isShow;
   }
 
   signOut(): void {

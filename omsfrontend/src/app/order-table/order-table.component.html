@@ -4,8 +4,24 @@
         <mat-form-field appearance="fill">
             <input matInput placeholder="search" autocomplete="off" (keyup)="filterData($event)">
         </mat-form-field>
+        &nbsp;
+        <button mat-raised-button (click)="showOrHide()">More Search</button>        
     </div>
-
+   
+    <div *ngIf = "!isShow">
+        <form class="d-flex">
+            <input (keyup)="filterOrderID($event)" class="search form-control me-2" type="search" placeholder="Search with Order_id" aria-label="Search" name="Search">
+        </form>
+        <br>
+        <form class="d-flex">
+            <input (keyup)="filterUserID($event)" class="search form-control me-2" type="search" placeholder="Search with User_id" aria-label="Search" name="Search">
+        </form>
+        <br>
+        <form class="d-flex">
+            <input (keyup)="filterData($event)" class="search form-control me-2" type="search" placeholder="Search with Order_status" aria-label="Search" name="Search">
+        </form>
+        <br>
+    </div>
     
     <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -31,7 +47,7 @@
     </table>
 
     
-    <mat-paginator #paginator [pageSize]="3" [pageSizeOptions]="[1,2,5, 10, 25, 100]">
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[1,2,5, 10, 25, 100]">
     </mat-paginator>
     
     <div class="text-center">

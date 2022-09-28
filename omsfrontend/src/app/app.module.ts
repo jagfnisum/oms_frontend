@@ -14,10 +14,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {  GoogleLoginProvider } from 'angularx-social-login';
 import { LoginPageComponent } from './login/login.component';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { LoginPageComponent } from './login/login.component';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    SocialLoginModule
+    SocialLoginModule,
+    MatButtonModule
   ],
   providers: [ 
     {
