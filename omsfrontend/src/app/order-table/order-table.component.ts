@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OrdersService } from '../orders.service';
 import { SocialAuthService } from 'angularx-social-login';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderDetailsComponent } from '../order-details/order-details.component';
 
 
 @Component({
@@ -33,6 +35,7 @@ export class OrderTableComponent implements OnInit {
   ];
 
   theSource!: MatTableDataSource<any>;
+
   dataSource!: MatTableDataSource<any>;
   dataSource_oid!: MatTableDataSource<any>;
   dataSource_uid!: MatTableDataSource<any>;
@@ -43,14 +46,15 @@ export class OrderTableComponent implements OnInit {
      order object
   */
   displayOrderTable = {
-    orderID: 'order_id',
-    userId: 'user_id',
-    addressID: 'address_id',
-    creditCardID: 'credit_card_id',
-    dateOrdered: 'date_ordered',
-    dateShipped: 'date_shipped',
+    orderID: 'orderID',
+    userId: 'userId',
+    addressID: 'addressID',
+    creditCardID: 'creditCardID',
+    dateOrdered: 'dateOrdered',
+    dateShipped: 'dateShipped',
     price: 'price',
-    orderStatus: 'order_status'
+    orderStatus: 'orderStatus'
+
   };
 
   //used in material table to find the index/row of a table item
@@ -59,11 +63,11 @@ export class OrderTableComponent implements OnInit {
   constructor(
     private service: OrdersService,
     private readonly _authService: SocialAuthService,
-    private router: Router) { }
+    private router: Router,
+    private dialogRef: MatDialog) { }
 
   ngOnInit() {
-
-    this.service.getAllOrders2().subscribe((response: any) => {
+    this.service.getAllOrders().subscribe((response: any) => {
       this.orders = response;
       this.dataSource = new MatTableDataSource(response);
       this.theSource =new MatTableDataSource(response);
@@ -89,6 +93,7 @@ export class OrderTableComponent implements OnInit {
       };
 
     })
+
   }
 
   filterData($event: any) {
@@ -116,20 +121,29 @@ export class OrderTableComponent implements OnInit {
     console.log(event.target.value);
   }
 
+  openDialog(response: any, id :string){
+    this.dialogRef.open(OrderDetailsComponent, {
+      width: '70%',
+      data: {response: response, orderid: id}
+    })
+  }
+
+
   /*
     Will return the dom reference of the current row selected
     will get called on button click by default
   */
   selectedRow(row: any) {
-    console.log('selectedRow', row);
+    this.openDialog(row.orderItems,row.orderID);
   }
 
 
   signOut(): void {
     this._authService.signOut();
     localStorage.removeItem('APP_TOKEN');
-    this.router.navigate(['/login']);
-    console.log("Signed OUT")
+    this._authService.authState.subscribe((user) => {
+        this.router.navigate(['/login']);
+    });
   }
 
 }
