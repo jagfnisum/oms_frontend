@@ -16,15 +16,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-import {  GoogleLoginProvider } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 import { LoginPageComponent } from './login/login.component';
-
+import { OrderDetailsComponent } from './order-details/order-details.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     OrderTableComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +39,10 @@ import { LoginPageComponent } from './login/login.component';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    SocialLoginModule
+    SocialLoginModule,
+    MatDialogModule
   ],
-  providers: [ 
+  providers: [
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

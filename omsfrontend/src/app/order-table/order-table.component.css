@@ -19,6 +19,7 @@ mat-header-cell, mat-cell {
 .mat-row:nth-child(odd):hover{
   background-color: #c0bfc0;
   transition: .5s;
+  cursor: pointer;
 }
 
 .mat-row:nth-child(even){
@@ -29,4 +30,6 @@ mat-header-cell, mat-cell {
 .mat-row:nth-child(even):hover{
   background-color: #c0bfc0;
   transition: .5s;
+  cursor: pointer;
+
 }

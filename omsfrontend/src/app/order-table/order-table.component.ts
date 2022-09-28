@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OrdersService } from '../orders.service';
 import { SocialAuthService } from 'angularx-social-login';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderDetailsComponent } from '../order-details/order-details.component';
 
 
 @Component({
@@ -53,7 +55,8 @@ export class OrderTableComponent implements OnInit {
 
   constructor(private service: OrdersService,
     private readonly _authService: SocialAuthService,
-    private router: Router) { }
+    private router: Router,
+    private dialogRef: MatDialog) { }
 
   ngOnInit() {
     // this.service.getAllOrders().subscribe((response:any) =>{
@@ -65,24 +68,42 @@ export class OrderTableComponent implements OnInit {
     //   this.dataSource.sort = this.matSort;
     // })
 
-    this.service.getAllOrders2().subscribe((response: any) => {
+    this.service.getAllOrders().subscribe((response: any) => {
       this.orders = response;
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
     })
+
   }
 
   filterData($event: any) {
     this.dataSource.filter = $event.target.value;
   }
 
+  openDialog(response: any){
+    this.dialogRef.open(OrderDetailsComponent, {
+      width: '70%',
+      data: {response: response}
+    })
+  }
+
+
   /*
     Will return the dom reference of the current row selected
     will get called on button click by default
   */
   selectedRow(row: any) {
-    console.log('selectedRow', row);
+    //console.log('selectedRow', row);
+    //console.log(row.order_id  )
+
+    this.service.getOrderDetails(row.order_id).subscribe((response: any) => {
+      console.log(response); //[0].orderid
+      this.openDialog(response);
+
+    })
+    
+
   }
 
   signOut(): void {
