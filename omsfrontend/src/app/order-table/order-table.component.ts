@@ -52,7 +52,7 @@ export class OrderTableComponent implements OnInit {
     price: 'price',
     orderStatus: 'order_status'
   };
-  
+
   //used in material table to find the index/row of a table item
   selectedRowIndex: any = null;
 
@@ -94,24 +94,19 @@ export class OrderTableComponent implements OnInit {
   filterData($event: any) {
     if(this.selectedSearchCategory == "all") {
         this.dataSource = this.theSource; 
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.matSort;
     } 
     if (this.selectedSearchCategory == "oid") {
-        this.dataSource = this.dataSource_oid;
-        this.dataSource_oid.paginator = this.paginator;
-        this.dataSource_oid.sort = this.matSort;
+        this.dataSource = this.dataSource_oid;    
     }
     if (this.selectedSearchCategory == "uid") {
         this.dataSource = this.dataSource_uid;
-        this.dataSource_uid.paginator = this.paginator;
-        this.dataSource_uid.sort = this.matSort;
     }
     if (this.selectedSearchCategory == "status"){
         this.dataSource = this.dataSource_status;
-        this.dataSource_status.paginator = this.paginator;
-        this.dataSource_status.sort = this.matSort;
     }
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.matSort;
 
     this.dataSource.filter = $event.target.value;
   }
