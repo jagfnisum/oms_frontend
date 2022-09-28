@@ -95,15 +95,10 @@ export class OrderTableComponent implements OnInit {
     will get called on button click by default
   */
   selectedRow(row: any) {
-    //console.log('selectedRow', row);
-    //console.log(row.order_id  )
+  
+    console.log(row.orderItems)
 
-    this.service.getOrderDetails(row.orderID).subscribe((response: any) => {
-      console.log(response); //[0].orderid
-      this.openDialog(response,row.orderID);
-
-    })
-    
+    this.openDialog(row.orderItems,row.orderID);
 
   }
 

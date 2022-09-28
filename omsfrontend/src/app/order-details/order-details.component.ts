@@ -59,7 +59,6 @@ export class OrderDetailsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.matSort;
 
-    console.log(data)
   }
 
   filterData($event: any) {
