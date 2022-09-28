@@ -32,7 +32,7 @@ export class OrderTableComponent implements OnInit {
     'orderStatus'
   ];
 
-  // tableDataSource!: MatTableDataSource<any>;
+  theSource!: MatTableDataSource<any>;
   dataSource!: MatTableDataSource<any>;
   dataSource_oid!: MatTableDataSource<any>;
   dataSource_uid!: MatTableDataSource<any>;
@@ -52,9 +52,7 @@ export class OrderTableComponent implements OnInit {
     price: 'price',
     orderStatus: 'order_status'
   };
-
   
-
   //used in material table to find the index/row of a table item
   selectedRowIndex: any = null;
 
@@ -67,47 +65,54 @@ export class OrderTableComponent implements OnInit {
 
     this.service.getAllOrders2().subscribe((response: any) => {
       this.orders = response;
-      // this.tableDataSource = new MatTableDataSource(response);
       this.dataSource = new MatTableDataSource(response);
+      this.theSource =new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
 
-
+      // search with orderID column
       this.dataSource_oid = new MatTableDataSource(response);
       this.dataSource_oid.filterPredicate = (data : any, filter : any) => {
         return data.orderID == filter;
       };
-      this.dataSource_oid.paginator = this.paginator;
-      this.dataSource_oid.sort = this.matSort;
-
+      
+      // search with userId column
       this.dataSource_uid = new MatTableDataSource(response);
       this.dataSource_uid.filterPredicate = (data : any, filter : any) => {
         return data.userId == filter;
       };
-      this.dataSource_uid.paginator = this.paginator;
-      this.dataSource_uid.sort = this.matSort;
-
+     
+      // search with orderStatus column
       this.dataSource_status = new MatTableDataSource(response);
       this.dataSource_status.filterPredicate = (data : any, filter : any) => {
-        return data.orderStatus == filter;
+        return data.orderStatus.toLowerCase().includes(filter.toLowerCase());
       };
-      this.dataSource_status.paginator = this.paginator;
-      this.dataSource_status.sort = this.matSort;
 
-      // console.log(response);
     })
   }
 
   filterData($event: any) {
     if(this.selectedSearchCategory == "all") {
-        this.dataSource = this.dataSource
-    } else if (this.selectedSearchCategory == "oid") {
+        this.dataSource = this.theSource; 
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.matSort;
+    } 
+    if (this.selectedSearchCategory == "oid") {
         this.dataSource = this.dataSource_oid;
-    } else if (this.selectedSearchCategory == "uid") {
-        this.dataSource = this.dataSource_uid;
-    } else if (this.selectedSearchCategory == "status"){
-        this.dataSource = this.dataSource_status;
+        this.dataSource_oid.paginator = this.paginator;
+        this.dataSource_oid.sort = this.matSort;
     }
+    if (this.selectedSearchCategory == "uid") {
+        this.dataSource = this.dataSource_uid;
+        this.dataSource_uid.paginator = this.paginator;
+        this.dataSource_uid.sort = this.matSort;
+    }
+    if (this.selectedSearchCategory == "status"){
+        this.dataSource = this.dataSource_status;
+        this.dataSource_status.paginator = this.paginator;
+        this.dataSource_status.sort = this.matSort;
+    }
+
     this.dataSource.filter = $event.target.value;
   }
 
