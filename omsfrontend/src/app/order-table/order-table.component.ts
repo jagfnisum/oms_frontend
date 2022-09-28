@@ -21,16 +21,16 @@ export class OrderTableComponent implements OnInit {
   orders = [];
 
   displayedColumns = [
-    'order_id',
-    'user_id',
-    'address_id',
-    'credit_card_id',
-    'date_ordered',
-    'date_shipped',
+    'orderID',
+    'userId',
+    'addressID',
+    'creditCardID',
+    'dateOrdered',
+    'dateShipped',
     'price',
-    'order_status'
+    'orderStatus'
   ];
-
+ 
   dataSource!: MatTableDataSource<any>;
 
   /* 
@@ -38,14 +38,14 @@ export class OrderTableComponent implements OnInit {
      order object
   */
   displayOrderTable = {
-    order_id: 'order_id',
-    user_id: 'user_id',
-    address_id: 'address_id',
-    credit_card_id: 'credit_card_id',
-    date_ordered: 'date_ordered',
-    date_shipped: 'date_shipped',
+    orderID: 'orderID',
+    userId: 'userId',
+    addressID: 'addressID',
+    creditCardID: 'creditCardID',
+    dateOrdered: 'dateOrdered',
+    dateShipped: 'dateShipped',
     price: 'price',
-    order_status: 'order_status'
+    orderStatus: 'orderStatus'
   };
 
   
@@ -70,6 +70,7 @@ export class OrderTableComponent implements OnInit {
 
     this.service.getAllOrders().subscribe((response: any) => {
       this.orders = response;
+      console.log(response)
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -81,10 +82,10 @@ export class OrderTableComponent implements OnInit {
     this.dataSource.filter = $event.target.value;
   }
 
-  openDialog(response: any){
+  openDialog(response: any, id :string){
     this.dialogRef.open(OrderDetailsComponent, {
       width: '70%',
-      data: {response: response}
+      data: {response: response, orderid: id}
     })
   }
 
@@ -97,9 +98,9 @@ export class OrderTableComponent implements OnInit {
     //console.log('selectedRow', row);
     //console.log(row.order_id  )
 
-    this.service.getOrderDetails(row.order_id).subscribe((response: any) => {
+    this.service.getOrderDetails(row.orderID).subscribe((response: any) => {
       console.log(response); //[0].orderid
-      this.openDialog(response);
+      this.openDialog(response,row.orderID);
 
     })
     

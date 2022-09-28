@@ -4,7 +4,10 @@ import { OrdersService } from '../orders.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+
+
 export interface DialogData {
+  orderid: string;
   response: any[];
 }
 
@@ -17,7 +20,7 @@ export interface DialogData {
 })
 export class OrderDetailsComponent implements OnInit {
 
-  
+
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) matSort!: MatSort;
 
@@ -55,6 +58,8 @@ export class OrderDetailsComponent implements OnInit {
     this.dataSource = new MatTableDataSource(data.response);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.matSort;
+
+    console.log(data)
   }
 
   filterData($event: any) {
