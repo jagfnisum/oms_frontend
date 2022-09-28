@@ -1,16 +1,13 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OrdersService } from '../orders.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
 
 export interface DialogData {
   orderid: string;
   response: any[];
 }
-
 
 
 @Component({
@@ -56,10 +53,14 @@ export class OrderDetailsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
     this.dataSource = new MatTableDataSource(data.response);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.matSort;
 
   }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.matSort;  
+  }
+
 
   filterData($event: any) {
     this.dataSource.filter = $event.target.value;

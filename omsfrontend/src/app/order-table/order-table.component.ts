@@ -59,18 +59,8 @@ export class OrderTableComponent implements OnInit {
     private dialogRef: MatDialog) { }
 
   ngOnInit() {
-    // this.service.getAllOrders().subscribe((response:any) =>{
-    //   console.log(response);
-    //   console.log("second method");
-    //   this.orders = response;
-    //   this.dataSource = new MatTableDataSource(response);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.matSort;
-    // })
-
     this.service.getAllOrders().subscribe((response: any) => {
       this.orders = response;
-      //console.log(response)
       this.dataSource = new MatTableDataSource(response);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.matSort;
@@ -95,11 +85,7 @@ export class OrderTableComponent implements OnInit {
     will get called on button click by default
   */
   selectedRow(row: any) {
-  
-    //console.log(row.orderItems)
-
     this.openDialog(row.orderItems,row.orderID);
-
   }
 
   signOut(): void {
@@ -108,7 +94,6 @@ export class OrderTableComponent implements OnInit {
     this._authService.authState.subscribe((user) => {
         this.router.navigate(['/login']);
     });
-    console.log("Signed OUT")
   }
 
 }
