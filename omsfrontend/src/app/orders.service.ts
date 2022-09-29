@@ -7,7 +7,6 @@ import { Injectable } from '@angular/core';
 export class OrdersService {
 
   baseUrl = 'http://localhost:8080/api/order/getOrders'; 
-  testUrl = 'https://jsonplaceholder.typicode.com/users';
 
   orderDetailsUrl = 'http://localhost:8080/api/order/items/getOrderInfo/';
 

@@ -24,7 +24,6 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-
   async signOut(): Promise<void> {
     try {
       await this._authService.signOut(true);
