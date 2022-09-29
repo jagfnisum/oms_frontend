@@ -8,7 +8,8 @@
                     (keyup)="filterData($event)"
                     >
     
-            <select (change)="handleDropdown($event)" name="categoryDD" >
+            <select id="dropdown"
+                (change)="handleDropdown($event)" name="categoryDD" >
               <option value="all" >All</option>
               <option value="oid">Order ID</option>
               <option value="uid">User ID</option>
@@ -25,7 +26,12 @@
                 {{ item.value | titlecase }}
             </th>
             
-            <td mat-cell *matCellDef="let orders">{{ orders[item.key] }}</td>
+            <div *ngIf="item.key === 'price' ">
+                <td mat-cell *matCellDef="let orders">${{ orders[item.key] }}</td>
+            </div>
+            <div *ngIf="item.key != 'price' ">
+                <td mat-cell *matCellDef="let orders">{{ orders[item.key] }}</td>
+            </div>
         
         </ng-container>
 
@@ -39,9 +45,6 @@
     <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[1,2,5, 10, 25, 100]">
     </mat-paginator>
     
-    <div class="text-center">
-        <button  (click)="signOut()">Logout from Google</button>
-    </div>
 </div>
 
 

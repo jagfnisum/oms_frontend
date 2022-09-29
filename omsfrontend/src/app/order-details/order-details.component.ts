@@ -6,7 +6,9 @@ import { MatTableDataSource } from '@angular/material/table';
 
 export interface DialogData {
   orderid: string;
-  response: any[];
+  orderItems: any[];
+  addressID: string;
+  creditCardID: string;
 }
 
 
@@ -52,7 +54,7 @@ export class OrderDetailsComponent implements OnInit {
     public dialogRef: MatDialogRef<OrderDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
-    this.dataSource = new MatTableDataSource(data.response);
+    this.dataSource = new MatTableDataSource(data.orderItems);
 
   }
 
