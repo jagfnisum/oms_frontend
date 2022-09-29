@@ -7,10 +7,8 @@ import { Injectable } from '@angular/core';
 export class OrdersService {
 
   baseUrl = 'http://localhost:8080/api/order/getOrders'; 
-  testUrl = 'https://jsonplaceholder.typicode.com/users';
 
   orderDetailsUrl = 'http://localhost:8080/api/order/items/getOrderInfo/';
-
 
   constructor(private http: HttpClient) { }
 
@@ -20,10 +18,6 @@ export class OrdersService {
 
   getAllOrders() {
     return this.http.get<any>(`${this.baseUrl}`);
-  }
-
-  testOrders(){
-    return this.http.get<any>(`${this.testUrl}`);
   }
 
 }
