@@ -26,8 +26,6 @@ export class OrderTableComponent implements OnInit {
   displayedColumns = [
     'orderID',
     'userId',
-    'addressID',
-    'creditCardID',
     'dateOrdered',
     'dateShipped',
     'price',
@@ -48,8 +46,6 @@ export class OrderTableComponent implements OnInit {
   displayOrderTable = {
     orderID: 'orderID',
     userId: 'userId',
-    addressID: 'addressID',
-    creditCardID: 'creditCardID',
     dateOrdered: 'dateOrdered',
     dateShipped: 'dateShipped',
     price: 'price',
@@ -121,10 +117,14 @@ export class OrderTableComponent implements OnInit {
     console.log(event.target.value);
   }
 
-  openDialog(response: any, id :string){
+  openDialog(orderItems: any, id :string, addrID:string,ccdID:string){
     this.dialogRef.open(OrderDetailsComponent, {
       width: '70%',
-      data: {response: response, orderid: id}
+      data: {orderItems: orderItems,
+         orderid: id,
+          addressID: addrID,
+           creditCardID:ccdID
+          }
     })
   }
 
@@ -134,7 +134,7 @@ export class OrderTableComponent implements OnInit {
     will get called on button click by default
   */
   selectedRow(row: any) {
-    this.openDialog(row.orderItems,row.orderID);
+    this.openDialog(row.orderItems,row.orderID, row.addressID, row.creditCardID);
   }
 
 

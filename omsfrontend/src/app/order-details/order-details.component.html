@@ -1,4 +1,12 @@
-<h1 class="orderidHEAD">Order ID :  {{data.orderid}}</h1>
+<header class="headerContainer">
+        <h3 class="orderidHEAD">
+            <b > Order ID :</b> {{data.orderid}}  	&nbsp; &nbsp;   &nbsp; &nbsp;  
+            <b> Address ID :</b> {{data.addressID}}  	&nbsp;	&nbsp;   &nbsp; &nbsp;  
+            <b> Credit Card ID :</b> {{data.creditCardID}} 
+        </h3>
+        <!-- <h3 class="orderidHEAD">Address ID : {{data.addressID}} </h3>
+        <h3 class="orderidHEAD">Credit Card ID : {{data.creditCardID}} </h3> -->
+</header>
 
 <div class="container">
 
@@ -11,18 +19,18 @@
     <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
 
         <ng-container *ngFor="let item of displayOrderDetailsTable | keyvalue" [matColumnDef]="item.key">
-            
+
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 {{ item.value | titlecase }}
             </th>
-            
+
             <td mat-cell *matCellDef="let orderDetails">{{ orderDetails[item.key] }}</td>
-        
+
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns let i= index" 
-            [ngClass]="{'highlightTableColor': selectedRowIndex == i}" ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns let i= index"
+            [ngClass]="{'highlightTableColor': selectedRowIndex == i}"></tr>
 
     </table>
 
