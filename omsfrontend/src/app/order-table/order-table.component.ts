@@ -120,7 +120,6 @@ export class OrderTableComponent implements OnInit {
   */
   handleDropdown(event: any) {
     this.selectedSearchCategory = event.target.value;
-    console.log(event.target.value);
   }
 
 

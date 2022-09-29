@@ -31,8 +31,6 @@ export class OrdersService {
   getCreditCard(cc_id: string){
     return this.http.get<any>(`${this.creditUrl}` + cc_id);
   }
-  testOrders(){
-    return this.http.get<any>(`${this.testUrl}`);
-  }
+
 
 }
