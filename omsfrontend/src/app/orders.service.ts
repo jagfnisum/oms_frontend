@@ -11,6 +11,7 @@ export class OrdersService {
 
   orderDetailsUrl = 'http://localhost:8080/api/order/items/getOrderInfo/';
 
+  addressUrl = 'http://localhost:8081/api/address/getAddress/';
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +21,10 @@ export class OrdersService {
 
   getAllOrders() {
     return this.http.get<any>(`${this.baseUrl}`);
+  }
+
+  getAddress(address_id: string){
+    return this.http.get<any>(`${this.addressUrl}` + address_id);
   }
 
   testOrders(){

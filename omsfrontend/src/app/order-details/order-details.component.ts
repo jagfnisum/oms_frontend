@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { OrdersService } from '../orders.service';
 
 export interface DialogData {
   orderid: string;
@@ -19,6 +20,8 @@ export interface DialogData {
 })
 export class OrderDetailsComponent implements OnInit {
 
+  theAddress = '';
+  theCreditCard = '';
 
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) matSort!: MatSort;
@@ -51,10 +54,16 @@ export class OrderDetailsComponent implements OnInit {
   };
 
   constructor(
+    private service : OrdersService,
     public dialogRef: MatDialogRef<OrderDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
     this.dataSource = new MatTableDataSource(data.orderItems);
+    this.service.getAddress(data.addressID).subscribe(response => {
+        this.theAddress = response.street + ' ' + response.street2 + ' ' + response.city +
+                          ' ' + response.state + ' ' + response.zip; 
+        console.log(this.theAddress);
+    })
 
   }
 
