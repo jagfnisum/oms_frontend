@@ -128,7 +128,6 @@ export class OrderTableComponent implements OnInit {
     })
   }
 
-
   /*
     Will return the dom reference of the current row selected
     will get called on button click by default
@@ -137,13 +136,13 @@ export class OrderTableComponent implements OnInit {
     this.openDialog(row.orderItems,row.orderID, row.addressID, row.creditCardID);
   }
 
-
-  signOut(): void {
-    this._authService.signOut();
-    localStorage.removeItem('APP_TOKEN');
-    this._authService.authState.subscribe((user) => {
-        this.router.navigate(['/login']);
-    });
-  }
-
 }
+
+
+// signOut(): void {
+//   this._authService.signOut();
+//   localStorage.removeItem('APP_TOKEN');
+//   this._authService.authState.subscribe((user) => {
+//       this.router.navigate(['/login']);
+//   });
+// }

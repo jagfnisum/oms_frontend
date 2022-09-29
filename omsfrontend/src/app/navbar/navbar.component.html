@@ -1,7 +1,10 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand">
-        <img src="assets/nisum-logo.png" width="100" height="24" class="d-inline-block align-text-top">       
+        <img src="assets/nisum-logo.png" width="auto" height="40" class="d-inline-block align-text-top">       
       </a>
+
+      <button type="button" class="btn btn-outline-dark" *ngIf="user"   (click)="signOut()">Log Out</button>
+
     </div>
   </nav>
