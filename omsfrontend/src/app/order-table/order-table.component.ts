@@ -92,6 +92,9 @@ export class OrderTableComponent implements OnInit {
 
   }
 
+  /*
+    Used for search feature 
+  */
   filterData($event: any) {
     if(this.selectedSearchCategory == "all") {
         this.dataSource = this.theSource; 
@@ -112,11 +115,17 @@ export class OrderTableComponent implements OnInit {
     this.dataSource.filter = $event.target.value;
   }
 
+  /* 
+    For search dropdown option 
+  */
   handleDropdown(event: any) {
     this.selectedSearchCategory = event.target.value;
-    console.log(event.target.value);
   }
 
+
+  /*
+    Displays Order Details inside the pop up
+  */
   openDialog(orderItems: any, id :string, addrID:string,ccdID:string){
     this.dialogRef.open(OrderDetailsComponent, {
       width: '70%',
@@ -136,13 +145,6 @@ export class OrderTableComponent implements OnInit {
     this.openDialog(row.orderItems,row.orderID, row.addressID, row.creditCardID);
   }
 
+
 }
 
-
-// signOut(): void {
-//   this._authService.signOut();
-//   localStorage.removeItem('APP_TOKEN');
-//   this._authService.authState.subscribe((user) => {
-//       this.router.navigate(['/login']);
-//   });
-// }

@@ -7,10 +7,12 @@ import { Injectable } from '@angular/core';
 export class OrdersService {
 
   baseUrl = 'http://localhost:8080/api/order/getOrders'; 
-  testUrl = 'https://jsonplaceholder.typicode.com/users';
 
   orderDetailsUrl = 'http://localhost:8080/api/order/items/getOrderInfo/';
 
+  addressUrl = 'http://localhost:8080/api/address/getAddress/';
+
+  creditUrl = 'http://localhost:8080/api/creditCard/getCard/';
 
   constructor(private http: HttpClient) { }
 
@@ -22,8 +24,13 @@ export class OrdersService {
     return this.http.get<any>(`${this.baseUrl}`);
   }
 
-  testOrders(){
-    return this.http.get<any>(`${this.testUrl}`);
+  getAddress(address_id: string){
+    return this.http.get<any>(`${this.addressUrl}` + address_id);
   }
+
+  getCreditCard(cc_id: string){
+    return this.http.get<any>(`${this.creditUrl}` + cc_id);
+  }
+
 
 }

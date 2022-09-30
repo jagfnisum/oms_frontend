@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { OrdersService } from '../orders.service';
 
 export interface DialogData {
   orderid: string;
@@ -26,10 +27,11 @@ export class OrderDetailsComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
 
   ngOnInit(): void {
+
   }
 
-  testRespone: string = '';
-
+  streetAddr = ' ';
+  creditCard =  ' ';
   orderDetails = [];
   selectedRowIndex: any = null;
 
@@ -51,16 +53,32 @@ export class OrderDetailsComponent implements OnInit {
   };
 
   constructor(
+    private service: OrdersService,
     public dialogRef: MatDialogRef<OrderDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
     this.dataSource = new MatTableDataSource(data.orderItems);
 
+    this.service.getAddress(data.addressID).subscribe((response: any) => {
+
+      this.streetAddr = response.street
+      if (response.street2 != null) {
+        this.streetAddr += ' ' + response.street2
+      }
+      this.streetAddr += ', ' + response.city + ', ' + response.state + ' ' + response.zip
+
+    })
+
+    this.service.getCreditCard(data.creditCardID).subscribe((Response:any)=>{
+      this.creditCard = Response.card_number.substring(12)
+    })
+
   }
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.matSort;  
+    this.dataSource.sort = this.matSort;
   }
 
 
